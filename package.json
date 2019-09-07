@@ -1,0 +1,19 @@
+{
+  "name": "voicetagsearchtool",
+  "version": "1.0.0",
+  "description": "finds voice controls",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maslovai/VoiceTagSearchTool.git"
+  },
+  "author": "iryna maslova",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maslovai/VoiceTagSearchTool/issues"
+  },
+  "homepage": "https://github.com/maslovai/VoiceTagSearchTool#readme"
+}

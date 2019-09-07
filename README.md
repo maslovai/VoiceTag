@@ -1,2 +1,2 @@
 # VoiceTagSearchTool
-Finds voice tags for programming with voice
+Finds voice tag commands for programming with voice
