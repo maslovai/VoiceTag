@@ -4,12 +4,50 @@
     <title>
         Voice Tag Search
     </title>
+    <link rel="stylesheet" href="style.css">
 </head> 
 <body>
-    <div>
+<header>
         <h1>Voice Tag Search</h1>
-
+</header>
+    <div id = "root">
+        <form id = "input">
+            Select:
+            <select name="Element">
+                <option value="All">All</option>
+                <option value="File">File</option>
+                <option value="Other">Other</option>
+            </select><br>
+            Search:
+            <input type="text" name="word">
+            <button>Go!</button>
+        </form>
+        <form id = "result">
+            <table id = "resultTable">
+                <thead>
+                    <tr>
+                        <td>
+                            #
+                        </td>
+                        <td>
+                            NAME
+                        </td>
+                        <td>
+                            VOICE TAG
+                        </td>
+                    </tr>
+                </thead>
+            </table>
+        </form>
     </div>
-
+<footer>
+       &copy; 2019 | Search Tool | Happy Coding!
+</footer>
+<script
+    src="https://code.jquery.com/jquery-3.4.1.js"
+    integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+    crossorigin="anonymous">
+</script>
+<script src = "index.js"></script>
 </body>
 </html>
