@@ -7,10 +7,11 @@
     <link rel="stylesheet" href="style.css">
 </head> 
 <body>
-<header>
-        <h1>Voice Tag Search</h1>
-</header>
-    <div id = "root">
+    <div id = "root" class = "root">
+        <div class = "subRoot">
+            <h1>Voice Tag Search</h1>
+        </div>
+        <div class = "subRoot">
         <form id = "input">
             Select:
             <select name="Element">
@@ -22,10 +23,10 @@
             <input type="text" name="word">
             <button>Go!</button>
         </form>
-        <form id = "result">
+        </div>
+        <div class = "subRoot">
             <table id = "resultTable">
-                <thead>
-                    <tr>
+                    <thead>
                         <td>
                             #
                         </td>
@@ -35,14 +36,18 @@
                         <td>
                             VOICE TAG
                         </td>
+                    </thead>
+                    <tr>
+                        <td>1</td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                </thead>
-            </table>
-        </form>
+                </table>
+        </div>
+        <div class = "subRoot">
+                &copy; 2019 | Search Tool | Happy Coding!
+        </div>
     </div>
-<footer>
-       &copy; 2019 | Search Tool | Happy Coding!
-</footer>
 <script
     src="https://code.jquery.com/jquery-3.4.1.js"
     integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
