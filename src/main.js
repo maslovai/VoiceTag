@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDom from 'react-dom';
 import './main.scss';
+import Body from './body';
 class Header extends React.Component{
     render(){
         return(
@@ -15,10 +16,8 @@ class App extends React.Component{
 render(){
     return (
         <div>
-            <div id="parentDiv">
-                <Header />
-                <button onClick={this.findVoiceCommand}>Go!</button>
-            </div>
+            <Header />
+            <Body />
         </div>
     )
 }
