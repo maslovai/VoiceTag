@@ -14,8 +14,11 @@ table, thead, td{
     color:blue;
     border: 1px solid black;
     min-height: 20px;
+    border-collapse: collapse
 }
-table, tr, td{
-    min-height: 2em;
-}
+// table, tr, td{
+//     min-height: 2em;
+//     border: collapse;
+// }
+
 

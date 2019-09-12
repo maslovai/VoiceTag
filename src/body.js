@@ -10,15 +10,15 @@ class Body extends React.Component{
                'All', 'View', 'Format', 'Help'
            ],
            commands:[
-            'Next Error','View.NextError',
-            'Previous Error','View.PreviousError',
-            'Next Task','View.NextTask',
-            'Previous Task','View.PreviousTask',
-            'Show Task Help','Help.ShowTaskHelp',
-            'Align Bottoms','Format.AlignBottoms',
-            'Align Middles','Format.AlignMiddles',
-            'Align Lefts','Format.AlignLefts',
-            'Align Rights','Format.AlignRights']
+            {'voice':'NEXT ERROR','written':'View.NextError'},
+            {'voice':'Previous Error','written':'View.PreviousError'},
+            {'voice':'Next Task','written':'View.NextTask'},
+            {'voice':'Previous Task','written':'View.PreviousTask'},
+            {'voice':'Show Task Help','written':'Help.ShowTaskHelp'},
+            {'voice':'Align Bottoms','written':'Format.AlignBottoms'},
+            {'voice':'Align Lefts','written':'Format.AlignLefts'},
+            {'voice':'Align Middles','written':'Format.AlignMiddles'},
+            ]
            },
            
             //    {Parent:'View', command:['PreviousError','Previous Error','NextTask','Next Task','PreviousTask', 'Previous Task']},
@@ -30,19 +30,28 @@ class Body extends React.Component{
     }
     findCategory(e){
         this.setState({
-            currentCategory: e.target.value
+            currentCategory: e.target.value,
+            active : this.state.commands.filter((item)=> {return(item.written.includes(e.target.value))})    
         })
     }
     findVoiceCommand(inputCommand){
         console.log(inputCommand, this.state.currentCategory)
-        this.setState({
-            active : this.state.commands.filter((item)=> {return(item.includes(inputCommand))})    
-        })  
+        if (inputCommand===""){
+            this.setState({
+                active : this.state.commands.filter((item)=> {return(item.written.includes(this.state.currentCategory))})    
+            }) 
+        }
+        else{
+            this.setState({
+                active : this.state.commands.filter((item)=> {return(item.written.includes(inputCommand))})    
+            }) 
+        }
+         
     }
     render(){
         return(
             <div>
-                <form>
+                <form autoComplete="off">
                     <select name="category" onChange={this.findCategory} value ={this.state.currentCategory}>
                         {
                             this.state.options.map((opt,i) => 
@@ -51,11 +60,24 @@ class Body extends React.Component{
                     </select>
                     <input type = 'text' id='inputBox' placeholder='enter command here' onChange={()=>this.findVoiceCommand(inputBox.value)}></input>
                 </form>
-                {
+                <table>
+                   
+                    <thead>
+                        <tr> 
+                            <td>#</td><td>Written Command</td><td>Voice Command</td>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    {this.state.active.map((command,i)=>
+                     {return (<tr key={i}><td>{i}</td><td>{command.written}</td><td>{command.voice}</td></tr>)})
+                    }
+                    </tbody>
+                </table>
+                {/* {
                     this.state.active.map((command,i)=>
-                     {return (<div key={i}>{command}</div>)})
-                }
-                <button onClick={this.findVoiceCommand}>Go!</button>
+                     {return (<div key={i}>{command.written}+ "  " + {command.voice}}</div>)})
+                } */}
+                {/* <button onClick={this.findVoiceCommand}>Go!</button> */}
             </div>
             
 
