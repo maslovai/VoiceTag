@@ -1,5 +1,5 @@
 import React from 'react';
-
+const file = 'src/source.txt'
 class Body extends React.Component{
     constructor(props){
         super(props);
@@ -9,6 +9,7 @@ class Body extends React.Component{
            options:[
                'All', 'View', 'Format', 'Help'
            ],
+        //    commands: jsonData
            commands:[
             {'voice':'NEXT ERROR','written':'View.NextError'},
             {'voice':'Previous Error','written':'View.PreviousError'},
@@ -28,10 +29,29 @@ class Body extends React.Component{
         this.findCategory = this.findCategory.bind(this);
         this.findVoiceCommand = this.findVoiceCommand.bind(this);
     }
+    componentDidMount(){
+        let rawArr =[];
+        fetch(file)
+        .then(response => {return response.text()})
+        .then(data => {
+            // let obj ={};
+            rawArr = data.replace('|','\n').split('\n');
+            let temp=[];
+            for (let i=0,l =rawArr.length;i<l;i++){
+                temp.push({'voice':rawArr[i], 'written':rawArr[i+1]})
+                i++;
+            }
+            this.setState({
+                commands: temp
+            })
+            // console.log(this.state.commands)
+        })  
+    }
     findCategory(e){
+        console.log(this.state.commands)
         this.setState({
             currentCategory: e.target.value,
-            active : this.state.commands.filter((item)=> {return(item.written.includes(e.target.value))})    
+            active : this.state.commands.filter((item)=> {return(item.written.includes(e.target.value+'.'))})    
         })
     }
     findVoiceCommand(inputCommand){
@@ -49,6 +69,7 @@ class Body extends React.Component{
          
     }
     render(){
+
         return(
             <div>
                 <form autoComplete="off">
