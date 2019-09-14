@@ -6,26 +6,9 @@ class Body extends React.Component{
         this.state = {
            currentCategory:'All', 
            active:[],
-           options:[
-               'All', 'View', 'Format', 'Help'
-           ],
-        //    commands: jsonData
-           commands:[
-            {'voice':'NEXT ERROR','written':'View.NextError'},
-            {'voice':'Previous Error','written':'View.PreviousError'},
-            {'voice':'Next Task','written':'View.NextTask'},
-            {'voice':'Previous Task','written':'View.PreviousTask'},
-            {'voice':'Show Task Help','written':'Help.ShowTaskHelp'},
-            {'voice':'Align Bottoms','written':'Format.AlignBottoms'},
-            {'voice':'Align Lefts','written':'Format.AlignLefts'},
-            {'voice':'Align Middles','written':'Format.AlignMiddles'},
-            ]
-           },
-           
-            //    {Parent:'View', command:['PreviousError','Previous Error','NextTask','Next Task','PreviousTask', 'Previous Task']},
-            //    {Parent:'Format',command:['AlignBottoms - Align Bottoms','AlignLefts - Align Lefts','AlignRights -Align Rights']}
-           
-        
+           options:[],
+           commands:[]
+           }, 
         this.findCategory = this.findCategory.bind(this);
         this.findVoiceCommand = this.findVoiceCommand.bind(this);
     }
@@ -34,36 +17,40 @@ class Body extends React.Component{
         fetch(file)
         .then(response => {return response.text()})
         .then(data => {
-            // let obj ={};
-            rawArr = data.replace('|','\n').split('\n');
+            rawArr = data.split('\n');
             let temp=[];
             for (let i=0,l =rawArr.length;i<l;i++){
-                temp.push({'voice':rawArr[i], 'written':rawArr[i+1]})
-                i++;
+                let innerTemp = rawArr[i].split('\|');
+                temp.push({'voice':innerTemp[0], 'written':innerTemp[1]})
             }
-            this.setState({
-                commands: temp
+            let tempOptions =[];
+                tempOptions=temp.map(item=>{let tempItem = item.written.split('.');
+                 return tempItem[0]
             })
-            // console.log(this.state.commands)
+            let final=['All'];
+            tempOptions.map(item=>{if(final.indexOf(item)===-1){final.push(item)}})
+            this.setState({
+                commands: temp,
+                options:final
+            })
         })  
     }
     findCategory(e){
-        console.log(this.state.commands)
         this.setState({
             currentCategory: e.target.value,
             active : this.state.commands.filter((item)=> {return(item.written.includes(e.target.value+'.'))})    
         })
     }
     findVoiceCommand(inputCommand){
-        console.log(inputCommand, this.state.currentCategory)
+        console.log(inputCommand.toUpperCase(), this.state.currentCategory.toUpperCase())
         if (inputCommand===""){
             this.setState({
-                active : this.state.commands.filter((item)=> {return(item.written.includes(this.state.currentCategory))})    
+                active : this.state.commands.filter((item)=> {return(item.written.toUpperCase().includes(this.state.currentCategory.toUpperCase()))})    
             }) 
         }
         else{
             this.setState({
-                active : this.state.commands.filter((item)=> {return(item.written.includes(inputCommand))})    
+                active : this.state.commands.filter((item)=> {return(item.written.toUpperCase().includes(inputCommand.toUpperCase()))})    
             }) 
         }
          
