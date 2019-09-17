@@ -4,10 +4,11 @@ class Body extends React.Component{
     constructor(props){
         super(props);
         this.state = {
-           currentCategory:'All', 
+           currentCategory:'', 
            active:[],
-           options:[],
-           commands:[]
+           categories:[],
+           commands:[],
+           placeholder:'enter command here'
            }, 
         this.findCategory = this.findCategory.bind(this);
         this.findVoiceCommand = this.findVoiceCommand.bind(this);
@@ -31,8 +32,10 @@ class Body extends React.Component{
             tempOptions.map(item=>{if(final.indexOf(item)===-1){final.push(item)}})
             this.setState({
                 commands: temp,
-                options:final
+                categories:final,
+                active:temp
             })
+            
         })  
     }
     findCategory(e){
@@ -42,18 +45,15 @@ class Body extends React.Component{
         })
     }
     findVoiceCommand(inputCommand){
-        console.log(inputCommand.toUpperCase(), this.state.currentCategory.toUpperCase())
-        if (inputCommand===""){
+        console.log(inputCommand.toUpperCase(), this.state.commands)
+            
             this.setState({
-                active : this.state.commands.filter((item)=> {return(item.written.toUpperCase().includes(this.state.currentCategory.toUpperCase()))})    
+                active : this.state.commands.filter((item)=> 
+                { return(item.voice.toUpperCase().includes(inputCommand.toUpperCase()))}).filter((command)=>{
+                    return(command.written.includes(this.state.currentCategory+"."))
+                })    
             }) 
-        }
-        else{
-            this.setState({
-                active : this.state.commands.filter((item)=> {return(item.written.toUpperCase().includes(inputCommand.toUpperCase()))})    
-            }) 
-        }
-         
+
     }
     render(){
 
@@ -62,11 +62,11 @@ class Body extends React.Component{
                 <form autoComplete="off">
                     <select name="category" onChange={this.findCategory} value ={this.state.currentCategory}>
                         {
-                            this.state.options.map((opt,i) => 
+                            this.state.categories.map((opt,i) => 
                             { return(<option id = {i+'choice'} value = {opt} key={i} >{opt}</option>)})
                         }
                     </select>
-                    <input type = 'text' id='inputBox' placeholder='enter command here' onChange={()=>this.findVoiceCommand(inputBox.value)}></input>
+                    <input type = 'text' id='inputBox' placeholder={this.state.placeholder} onChange={()=>this.findVoiceCommand(inputBox.value)}></input>
                 </form>
                 <table>
                    
