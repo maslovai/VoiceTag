@@ -23,6 +23,7 @@ class Body extends React.Component{
             for (let i=0,l =rawArr.length;i<l;i++){
                 let innerTemp = rawArr[i].split('\|');
                 temp.push({'voice':innerTemp[0], 'written':innerTemp[1]})
+                if (temp[i].written==='ShowCrossGroupLinks')console.log(temp[i])
             }
             let tempOptions =[];
                 tempOptions=temp.map(item=>{let tempItem = item.written.split('.');
@@ -39,18 +40,28 @@ class Body extends React.Component{
         })  
     }
     findCategory(e){
-        this.setState({
-            currentCategory: e.target.value,
-            active : this.state.commands.filter((item)=> {return(item.written.includes(e.target.value+'.'))})    
-        })
+        inputBox.value = '';
+        if (e.target.value==="All") {
+            this.setState({
+                currentCategory: e.target.value,
+                active:this.state.commands
+            })
+        }
+        else{
+            this.setState({
+                currentCategory: e.target.value,
+                active : this.state.commands.filter((item)=> {return(item.written.includes(e.target.value+'.'))})    
+            })
+        }
+       
     }
     findVoiceCommand(inputCommand){
-        console.log(inputCommand.toUpperCase(), this.state.commands)
-            
+        // console.log(this.input.current.value.toUpperCase(), this.state.commands)
             this.setState({
                 active : this.state.commands.filter((item)=> 
-                { return(item.voice.toUpperCase().includes(inputCommand.toUpperCase()))}).filter((command)=>{
-                    return(command.written.includes(this.state.currentCategory+"."))
+                { if (this.state.currentCategory==="All") return (item.voice.toUpperCase().includes(inputCommand.toUpperCase()));
+                  else return(item.voice.toUpperCase().includes(inputCommand.toUpperCase()))}).filter((command)=>{
+                                                    return(command.written.includes(this.state.currentCategory+"."))
                 })    
             }) 
 
@@ -66,7 +77,7 @@ class Body extends React.Component{
                             { return(<option id = {i+'choice'} value = {opt} key={i} >{opt}</option>)})
                         }
                     </select>
-                    <input type = 'text' id='inputBox' placeholder={this.state.placeholder} onChange={()=>this.findVoiceCommand(inputBox.value)}></input>
+                    <input type = 'text' id='inputBox' placeholder={this.state.placeholder} onSubmit = {()=>this.findVoiceCommand(inputBox.value)} onChange={()=>this.findVoiceCommand(inputBox.value)}></input>
                 </form>
                 <table>
                    
