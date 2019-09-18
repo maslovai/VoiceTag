@@ -56,7 +56,7 @@ class Body extends React.Component{
        
     }
     findVoiceCommand(inputCommand){
-        // console.log(this.input.current.value.toUpperCase(), this.state.commands)
+        event.preventDefault();
             this.setState({
                 active : this.state.commands.filter((item)=> 
                 { if (this.state.currentCategory==="All") return (item.voice.toUpperCase().includes(inputCommand.toUpperCase()));
@@ -70,7 +70,7 @@ class Body extends React.Component{
 
         return(
             <div>
-                <form autoComplete="off">
+                <form autoComplete="off" onSubmit = {this.findVoiceCommand}>
                     <select name="category" onChange={this.findCategory} value ={this.state.currentCategory}>
                         {
                             this.state.categories.map((opt,i) => 
@@ -92,11 +92,6 @@ class Body extends React.Component{
                     }
                     </tbody>
                 </table>
-                {/* {
-                    this.state.active.map((command,i)=>
-                     {return (<div key={i}>{command.written}+ "  " + {command.voice}}</div>)})
-                } */}
-                {/* <button onClick={this.findVoiceCommand}>Go!</button> */}
             </div>
             
 
