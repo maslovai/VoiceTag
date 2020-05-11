@@ -2,28 +2,21 @@ import React from 'react';
 import ReactDom from 'react-dom';
 import './main.scss';
 import Body from './body';
-class Header extends React.Component{
-    render(){
-        return(
-            <header>
-                <h1>Voice Tag Search Tool</h1>
-            </header>
-        )
-    }
-}
+import Header from './header';
+
+// import Temp from './temp';
 
 class App extends React.Component{
     constructor(props){
         super(props)
       
     }
-
-    
     render(){
         return (
-            <div>
+            <div className="main">
                 <Header/>
                 <Body />
+                {/* <Temp/> */}
             </div>
         )
     }
